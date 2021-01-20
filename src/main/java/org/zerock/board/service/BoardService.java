@@ -11,6 +11,8 @@ public interface BoardService {
 
     PageResultDto<BoardDto, Object[]> getList(PageRequestDto requestDto);
 
+    BoardDto get(Long bno);
+
     default Board dtoToEntity(BoardDto dto) {
         Member member = Member.builder()
                 .email(dto.getWriterEmail())

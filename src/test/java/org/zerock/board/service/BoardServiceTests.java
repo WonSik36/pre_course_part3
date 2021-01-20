@@ -35,4 +35,13 @@ class BoardServiceTests {
             System.out.println(boardDto);
         }
     }
+
+    @Test
+    public void testGet() {
+        Long bno = 100L;
+
+        BoardDto boardDto = boardService.get(bno);
+
+        System.out.println(boardDto);
+    }
 }
