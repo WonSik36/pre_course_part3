@@ -11,15 +11,18 @@ import org.zerock.board.dto.PageResultDto;
 import org.zerock.board.entity.Board;
 import org.zerock.board.entity.Member;
 import org.zerock.board.repository.BoardRepository;
+import org.zerock.board.repository.ReplyRepository;
 
+import javax.transaction.Transactional;
 import java.util.function.Function;
 
 @Service
 @RequiredArgsConstructor
 @Log4j2
-public class BoardServiceImpl implements BoardService{
+public class BoardServiceImpl implements BoardService {
     private final BoardRepository repository;
 
+    private final ReplyRepository replyRepository;
 
     @Override
     public Long register(BoardDto dto) {
@@ -50,6 +53,14 @@ public class BoardServiceImpl implements BoardService{
         Object[] arr = (Object[]) result;
 
         return entityToDto((Board)arr[0], (Member)arr[1], (Long)arr[2]);
+    }
+
+    @Transactional
+    @Override
+    public void removeWithReplies(Long bno) {
+        replyRepository.deleteByBno(bno);
+
+        repository.deleteById(bno);
     }
 
 
